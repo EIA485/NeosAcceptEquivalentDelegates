@@ -19,7 +19,7 @@ namespace AcceptEquivalentDelegates
 			new Harmony("net.eia485.AcceptEquivalentDelegates").PatchAll();
 		}
 
-		//patching DelegateEditor instead of SyncDelegate<T> since i dont want to deal with generic pathcing pain
+		//patching DelegateEditor instead of SyncDelegate<T> since i dont want to deal with generic patching pain
 		[HarmonyPatch(typeof(DelegateEditor), nameof(DelegateEditor.TryReceive))]
 		class AcceptEquivalentDelegates_Patch
 		{
