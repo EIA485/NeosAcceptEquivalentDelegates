@@ -1,6 +1,6 @@
 # AcceptEquivalentDelegates
 
-A [NeosModLoader](https://github.com/zkxs/NeosModLoader) mod for [Neos VR](https://neos.com/) that allows the DelegateEditor to accept equivalent delegates eg: an `action<IButton, ButtonEventData>` will work for `ButtonEventHandler` delegate fields
+A [NeosModLoader](https://github.com/zkxs/NeosModLoader) mod for [Neos VR](https://neos.com/) that allows the DelegateEditor to accept equivalent delegates eg: an `ModalOverlayConstructor` will work for `Action<Slot>` delegate fields
 
 ## Installation
 1. Install [NeosModLoader](https://github.com/zkxs/NeosModLoader).
