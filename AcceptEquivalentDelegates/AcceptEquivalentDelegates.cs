@@ -1,23 +1,20 @@
-﻿using HarmonyLib;
-using NeosModLoader;
+﻿using BepInEx;
+using BepInEx.Logging;
+using BepInEx.NET.Common;
+using BepInExResoniteShim;
 using FrooxEngine;
-using System;
-using System.Collections.Generic;
+using HarmonyLib;
 using System.Reflection;
 using System.Reflection.Emit;
 
 namespace AcceptEquivalentDelegates
 {
-	public class AcceptEquivalentDelegates : NeosMod
+    [ResonitePlugin(PluginMetadata.GUID, PluginMetadata.NAME, PluginMetadata.VERSION, PluginMetadata.AUTHORS, PluginMetadata.REPOSITORY_URL)]
+    [BepInDependency(BepInExResoniteShim.PluginMetadata.GUID)]
+    public class AcceptEquivalentDelegates : BasePlugin
 	{
-		public override string Name => "AcceptEquivalentDelegates";
-		public override string Author => "eia485";
-		public override string Version => "1.0.0";
-		public override string Link => "https://github.com/EIA485/NeosAcceptEquivalentDelegates/";
-		public override void OnEngineInit()
-		{
-			new Harmony("net.eia485.AcceptEquivalentDelegates").PatchAll();
-		}
+		public override void Load() { HarmonyInstance.PatchAll(); log = Log; }
+		static ManualLogSource log;
 
 		//patching DelegateEditor instead of SyncDelegate<T> since i dont want to deal with generic patching pain
 		[HarmonyPatch(typeof(DelegateEditor), nameof(DelegateEditor.TryReceive))]
@@ -38,13 +35,14 @@ namespace AcceptEquivalentDelegates
 						yield return code;
 					}
 				}
-			}
+				if (find) log.LogError("TryReceive Transpiler Failed to find target il");
+            }
 		}
 		static bool MyTrySet(ISyncDelegate instance, Delegate target)
 		{
 			try
 			{
-				return instance.TrySet(target.Method.CreateDelegate(FirstGeneric(instance.GetType()), target.Target));
+                return instance.TrySet(target.Method.CreateDelegate(FirstGeneric(instance.GetType()), target.Target));
 			}
 			catch
 			{
