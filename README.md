@@ -1,6 +1,6 @@
 # AcceptEquivalentDelegates
 
-A [BepisLoader](https://github.com/ResoniteModding/BepisLoader) mod for [Resonite](https://resonite.com/) that allows the DelegateEditor to accept equivalent delegates eg: an `ModalOverlayConstructor` will work for `Action<Slot>` delegate fields
+A [BepisLoader](https://github.com/ResoniteModding/BepisLoader) mod for [Resonite](https://resonite.com/) that allows the DelegateEditor to accept equivalent delegates eg: an `ModalOverlayConstructor` will work for `Func<Slot, ModalOverlay>` delegate fields
 
 ## Installation
 1. Install [BepisLoader](https://github.com/ResoniteModding/BepisLoader).
